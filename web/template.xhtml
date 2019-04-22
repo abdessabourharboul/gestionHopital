@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+    </h:head>
+
+    <h:body>
+
+        <p:growl id="growl" life="3000" />
+
+        <p:layout fullPage="true">
+            <p:layoutUnit position="west" size="200" header="Hopital Abdessabour">
+                <h:form id="menuForm">
+                    <p:menu>
+                        <p:menuitem value="Home" outcome="/securiseAdministrateur/WelcomeAdministrateur" icon="ui-icon-home"/>
+                        <p:submenu label="Maintenance">       
+                            <p:menuitem value="Medecins" outcome="/securiseAdministrateur/MedecinGestionAdministrateur.xhtml"/>
+                            <p:menuitem value="Infirmieres" outcome="/securiseAdministrateur/InfirmiereGestionAdministrateur.xhtml" />
+                            <p:menuitem value="Rendez-vous" outcome="/securiseAdministrateur/AppointementsAdministrateur.xhtml" />
+                            <p:menuitem value="Analyses Medicaux" outcome="/securiseAdministrateur/PrelevementAdministrateur.xhtml" />
+                            <p:menuitem value="Chambres" outcome="/securiseAdministrateur/ChambreGestionAdministrateur.xhtml" />
+                            <p:menuitem value="Reservations" outcome="/securiseAdministrateur/ReservationChambreAdministrateur.xhtml" />
+                            <p:menuitem value="Rapports Medicaux" outcome="/securiseAdministrateur/RapportAdministrateur.xhtml" />
+                            <p:menuitem value="Banque de Sang" outcome="/securiseAdministrateur/BanqueSangAdministrateur.xhtml" />
+                            <p:menuitem value="Donation de Sang" outcome="/securiseAdministrateur/DonationGestionAdministrateur.xhtml" />
+                            <p:menuitem value="Se deconecter" action="#{administrateurController.logOut}"/>
+                        </p:submenu>
+                    </p:menu>
+                </h:form>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="60">
+                <ui:insert name="footer"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center">
+                <ui:insert name="body"/>
+            </p:layoutUnit>
+
+        </p:layout>
+
+    </h:body>
+
+</html>

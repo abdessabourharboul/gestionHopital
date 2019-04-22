@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templateClient.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="CREE CLIENT"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+
+           <center>
+                        <p style="font-size:72px;color:orange;text-shadow:30px 30px 30px #000;">HOPITAL ABDESSABOUR</p>
+                        <h:form>
+                            <h1><h:outputText value="Mes informations personnelles"/></h1>
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Nom d'utilisateur:" for="id" style="font-family: 'Comic Sans MS';" />
+                                <p:outputLabel id="id" value="#{userController.connectedUser.client.id}" title="Id" style="font-family: 'Comic Sans MS';"/>
+                                <p:outputLabel value="Nom:" for="nom" style="font-family: 'Comic Sans MS';"/>
+                                <p:outputLabel id="nom" value="#{userController.connectedUser.client.nom}" title="Nom" style="font-family: 'Comic Sans MS';"/>                   
+                                <p:outputLabel value="Prenom:" for="prenom" style="font-family: 'Comic Sans MS';"/>
+                                <p:outputLabel id="prenom" value="#{userController.connectedUser.client.prenom}" title="Prenom" style="font-family: 'Comic Sans MS';"/>
+                                <p:outputLabel value="Telephone:" for="telephone" style="font-family: 'Comic Sans MS';"/>
+                                <p:outputLabel id="telephone" value="#{userController.connectedUser.client.telephone}" title="Telephone" style="font-family: 'Comic Sans MS';"/>
+                                <p:outputLabel value="Gender:" for="gender" style="font-family: 'Comic Sans MS';"/>
+                                <p:outputLabel id="gender" value="#{userController.connectedUser.client.gender}" title="Gender" style="font-family: 'Comic Sans MS';"/>
+                                <p:outputLabel value="Birthdate:" for="birthdate" style="font-family: 'Comic Sans MS';"/>
+                                <p:outputLabel id="birthdate" value="#{userController.connectedUser.client.birthdate}" title="Birthdate" style="font-family: 'Comic Sans MS';" >
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </p:outputLabel>
+                            </p:panelGrid>
+                        </h:form>
+                    </center>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templateClient.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="CREE CLIENT"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+
+            <p style="font-size:72px;color:orange;text-shadow:1px 1px 1px #000;">HOPITAL ABDESSABOUR</p>
+            <p>Bienvenue #{userController.connectedUser.client.id} </p>
+
+            <f:view>
+                <h:form id="AppointementListForm">
+                    <h1><h:outputText value="Liste de Mes Rendez-vous"/></h1>
+                    <p:dataTable id="datalist"  value="#{userController.connectedUser.client.appointements}" var="item">                      
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Objet du Rendezvous"/>
+                            </f:facet>
+                            <h:outputText value="#{item.objet}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Medecin"/>
+                            </f:facet>
+                            <h:outputText value="#{item.medecin.id}" />
+                        </p:column>                                             
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Date du Rendezvous"/>
+                            </f:facet>
+                            <h:outputText value="#{item.rendezvous}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+            </f:view>
+        </ui:define>
+    </ui:composition>
+
+</html>

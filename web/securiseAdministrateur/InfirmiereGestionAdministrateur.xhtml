@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="CREE CLIENT"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form >
+                <center>
+                    <h1><h:outputText value="Nouveau Infirmier"/></h1>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Fullnom:" for="fullnom" />
+                        <p:inputText id="fullnom" value="#{infirmiereController.infirmiere.fullnom}" title="Fullnom" />                                    
+                        <p:outputLabel value="Telephone:" for="telephone" />
+                        <p:inputText id="telephone" value="#{infirmiereController.infirmiere.telephone}" title="Telephone" />
+                        <p:outputLabel value="Adresse:" for="adresse" />
+                        <p:inputText id="adresse" value="#{infirmiereController.infirmiere.adresse}" title="Adresse" />
+                        <p:outputLabel value="Type:" for="type" />
+                        <p:selectOneMenu id="type" value="#{infirmiereController.infirmiere.type}"  >
+                            <!-- TODO: update below reference to list of available items-->
+                            <f:selectItem itemLabel="Selectionner la specialite" itemValue="" />
+                            <f:selectItem itemLabel="Anesthésiste" itemValue="Anesthesiste" />
+                            <f:selectItem itemLabel="Bloc opératoire" itemValue="Bloc operatoire" />
+                            <f:selectItem itemLabel="Hygiéniste" itemValue="Hygieniste" />                               
+                        </p:selectOneMenu>  
+                    </p:panelGrid>
+                    <p:commandButton value="Valider" actionListener="#{infirmiereController.save()}" update=":InfirmiereListForm:datalist"/>
+
+                </center>
+            </h:form>
+            <h:form >
+
+                <p:panelGrid columns="2">
+                    
+                    <p:outputLabel value="Chosir votre choix" for="searchMedcins" />
+                    <p:selectOneMenu id="searchMedcins" value="#{infirmiereController.valeur}" >
+                        <f:selectItem itemLabel="fullname" itemValue="fullname" />
+                        <f:selectItem itemLabel="adresse" itemValue="adresse" />
+                        <f:selectItem itemLabel="telephone" itemValue="telephone" />
+                        <f:selectItem itemLabel="type" itemValue="type" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Search:" for="search" />
+                    <p:inputText id="search" value="#{infirmiereController.var}" title="Search" />
+                    
+                </p:panelGrid>
+                <p:commandButton value="Search" actionListener="#{infirmiereController.findByAllInf()}" 
+                                     update=" :InfirmiereListForm:datalist "/>
+            </h:form>
+            <f:view>
+                <h:form id="InfirmiereListForm">
+                    <h1><h:outputText value="List des infirmiers"/></h1>
+                    <p:dataTable id="datalist" value="#{infirmiereController.infirmieres}" var="item">          
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Id"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Telephone"/>
+                            </f:facet>
+                            <h:outputText value="#{item.telephone}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Adresse"/>
+                            </f:facet>
+                            <h:outputText value="#{item.adresse}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Fullnom"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fullnom}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Type"/>
+                            </f:facet>
+                            <h:outputText value="#{item.type}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Action Modifier"/>
+                            </f:facet>
+                            <p:commandButton  value="Modifier" icon="ui-icon-pencil" 
+                                              oncomplete="PF('modifierDialog').show();"
+                                              actionListener="#{infirmiereController.update(item)}" update=":fModifyInfirmiere"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Action Supprimer"/>
+                            </f:facet>
+                            <p:commandButton value="Supprimer" icon="ui-icon-cancel" update="datalist"
+                                             actionListener="#{infirmiereController.remove(item)}"/> 
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </f:view>
+            <h:form id="fModifyInfirmiere">
+                <p:dialog id="modifyDialog" header="Modifier Infirmier" widgetVar="modifierDialog">  
+                    <p:ajax event="close" update=":InfirmiereListForm:datalist"/> 
+                    <p:outputPanel id="modifyPanel">  
+                        <p:messages id="msges"/>  
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Fullnom:" for="fullnom" />
+                            <p:inputText id="fullnom" value="#{infirmiereController.infirmiere.fullnom}" title="Fullnom" />                                    
+                            <p:outputLabel value="Telephone:" for="telephone" />
+                            <p:inputText id="telephone" value="#{infirmiereController.infirmiere.telephone}" title="Telephone" />
+                            <p:outputLabel value="Adresse:" for="adresse" />
+                            <p:inputText id="adresse" value="#{infirmiereController.infirmiere.adresse}" title="Adresse" />
+                            <p:outputLabel value="Type:" for="type" />
+                            <p:selectOneMenu id="type" value="#{infirmiereController.infirmiere.type}"  >
+                                <f:selectItem itemLabel="Selectionner la specialite" itemValue="" />
+                                <f:selectItem itemLabel="Anesthésiste" itemValue="Anesthesiste" />
+                                <f:selectItem itemLabel="Bloc opératoire" itemValue="Bloc operatoire" />
+                                <f:selectItem itemLabel="Hygiéniste" itemValue="Hygieniste" />                               
+                            </p:selectOneMenu>
+                            <p:commandButton actionListener="#{infirmiereController.modify()}" 
+                                             value="SAVE" update=":InfirmiereListForm:datalist"
+                                             onclick="PF('modifyDialog').hide();"/>
+                        </p:panelGrid> 
+                    </p:outputPanel>
+                </p:dialog>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

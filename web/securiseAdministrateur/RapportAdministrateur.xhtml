@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="CREE CLIENT"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+
+            
+                <p:growl id="msgs" showDetail="true" />
+                <h3 style="margin-top:0">Gestion des Rapports Medicaux</h3>
+                <p:tabView>
+                    <p:tab title="Ajouter un Rapport">
+                        <h:form id="formAjout">           
+                            <p:growl id="msgs" showDetail="true" />
+                            <p:accordionPanel activeIndex="">
+                                <p:tab title="Ajout Rapport D'OPERATION">
+
+
+
+                                    <p:panelGrid columns="2" >
+                                        <p:outputLabel value="Type:" for="type" />
+                                        <p:inputText id="type" value="#{chirurgieController.chirurgie.type}" title="Type" />
+                                        <p:outputLabel value="Description:" for="description" />
+                                        <p:inputText id="description" value="#{chirurgieController.chirurgie.description}" title="Description" />
+                                        <p:outputLabel value="Medecin:" for="medecin" />
+                                        <p:selectOneMenu id="medecin" value="#{chirurgieController.chirurgie.medecin.id}" >
+                                            <f:selectItem itemLabel="Selectionner un medecin" itemValue=""/>
+                                            <f:selectItems value="#{medecinController.medecins}" var="a"
+                                                           itemValue="#{a.id}" itemLabel="#{a.fullname}"/>
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="Infirmiere:" for="infirmiere" />
+                                        <p:selectOneMenu id="infirmiere" value="#{chirurgieController.chirurgie.infirmiere.id}" >
+                                            <f:selectItem itemLabel="Selectionner un infirmier" itemValue=""/>
+                                            <f:selectItems value="#{infirmiereController.infirmieres}" var="a"
+                                                           itemValue="#{a.id}" itemLabel="#{a.fullnom}"/>
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="Client:" for="client" />
+                                        <p:selectOneMenu id="client" value="#{chirurgieController.chirurgie.client.id}" >
+                                            <f:selectItem itemLabel="Selectionner un client" itemValue=""/>
+                                            <f:selectItems value="#{clientController.clients}" var="a"
+                                                           itemValue="#{a.id}" itemLabel="#{a.nom}"/>
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="Date du Rapport:" for="rapport" />
+                                        <p:calendar id="rapport" value="#{chirurgieController.chirurgie.rapport}" title="Rapport" pattern="MM/dd/yyyy" />
+                                        <p:outputLabel value="Date d'operation:" for="operation" />
+                                        <p:calendar id="operation" value="#{chirurgieController.chirurgie.operation}" title="Operation" pattern="MM/dd/yyyy" />
+
+                                    </p:panelGrid>
+                                    <p:commandButton value="Valider" actionListener="#{chirurgieController.save()}" />
+
+                                </p:tab>
+                                <p:tab title="Ajout Rapport d'accouchement">
+                               
+                                            
+                                            <p:panelGrid columns="2">
+                                                <p:outputLabel value="Type:" for="type" />
+                                                <p:inputText id="type" value="#{accouchementController.accouchement.type}" title="Type" />
+                                                <p:outputLabel value="Description:" for="description" />
+                                                <p:inputText id="description" value="#{accouchementController.accouchement.description}" title="Description" />
+                                                <p:outputLabel value="Medecin:" for="medecin" />
+                                                <p:selectOneMenu id="medecin" value="#{accouchementController.accouchement.medecin}" >
+                                                    <f:selectItem itemLabel="Selectionner un medecin" itemValue=""/>
+                                                    <f:selectItems value="#{medecinController.medecins}" var="k"
+                                                                   itemValue="#{k.id}" itemLabel="#{k.fullname}"/>
+                                                </p:selectOneMenu>
+                                                <p:outputLabel value="Infirmiere:" for="infirmiere" />
+                                                <p:selectOneMenu id="infirmiere" value="#{accouchementController.accouchement.infirmiere}" >
+                                                    <f:selectItem itemLabel="Selectionner un infirmier" itemValue=""/>
+                                                    <f:selectItems value="#{infirmiereController.infirmieres}" var="c"
+                                                                   itemValue="#{c.id}" itemLabel="#{c.fullnom}"/>
+                                                </p:selectOneMenu>
+                                                <p:outputLabel value="Client:" for="client" />
+                                                <p:selectOneMenu id="client" value="#{accouchementController.accouchement.client}" >
+                                                    <f:selectItem itemLabel="Selectionner un client" itemValue=""/>
+                                                    <f:selectItems value="#{clientController.clients}" var="d"
+                                                                   itemValue="#{d.id}" itemLabel="#{d.nom}"/>
+                                                </p:selectOneMenu>
+                                                <p:outputLabel value="Childbirth:" for="childbirth" />
+                                                <p:inputText id="childbirth" value="#{accouchementController.accouchement.childbirth}" title="Childbirth" >
+                                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                </p:inputText>
+                                                <p:outputLabel value="Rapport:" for="rapport" />
+                                                <p:inputText id="rapport" value="#{accouchementController.accouchement.rapport}" title="Rapport" >
+                                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                </p:inputText>
+                                                <p:outputLabel value="SexEnfant:" for="sexEnfant" />
+                                                <p:inputText id="sexEnfant" value="#{accouchementController.accouchement.sexEnfant}" title="SexEnfant" />
+                                                <p:outputLabel value="PoidsEnfant:" for="poidsEnfant" />
+                                                <p:inputText id="poidsEnfant" value="#{accouchementController.accouchement.poidsEnfant}" title="PoidsEnfant" />
+                                            </p:panelGrid>
+                                            <p:commandButton value="Valider" actionListener="#{accouchementController.save()}" 
+                                                             update=":AccouchementFormList:datalist"/>
+                                       
+
+                                </p:tab>  
+                                <p:tab title="Ajout Rapport de deces">
+
+                                </p:tab> 
+                            </p:accordionPanel>
+                        </h:form>
+                    </p:tab>
+                    <p:tab title="Rapports d'opertions">
+
+                    </p:tab>
+                    <p:tab title="Rapports d'accouchements">
+                        <f:view>
+
+
+                            <h:form id="AccouchementFormList">
+                                <h1><h:outputText value="List"/></h1>
+                                <p:dataTable id="datalist" value="#{accouchementController.accouchements}" var="item">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Id"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.id}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Type"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.type}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Description"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.description}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Medecin"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.medecin}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Infirmiere"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.infirmiere}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Client"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.client}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Childbirth"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.childbirth}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Rapport"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.rapport}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="SexEnfant"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.sexEnfant}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="PoidsEnfant"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.poidsEnfant}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
+                        </f:view>
+
+                    </p:tab>
+                    <p:tab title="Rapports de deces">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+                            <h:outputText value="After a break of more than 15 years..." />
+                        
+                        </h:panelGrid>
+                    </p:tab>
+                </p:tabView>
+            
+
+        </ui:define>
+    </ui:composition>
+
+</html>

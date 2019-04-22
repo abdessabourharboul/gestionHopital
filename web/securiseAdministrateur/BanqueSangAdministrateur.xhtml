@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="CREE CLIENT"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+
+            <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Create/Edit"/></h1>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="GroupeSanguin:" for="groupeSanguin" />
+                            <p:selectOneMenu id="groupeSanguin" value="#{banqueSangController.banqueSang.groupeSanguin}"  >
+                                <!-- TODO: update below reference to list of available items-->
+                                <f:selectItem itemLabel="Selectionner Un groupe Sanguin" itemValue="" />
+                                <f:selectItem itemLabel="A+" itemValue="A+" />
+                                <f:selectItem itemLabel="A-" itemValue="A-" />
+                                <f:selectItem itemLabel="B+" itemValue="B+" />
+                                <f:selectItem itemLabel="B-" itemValue="B-" />
+                                <f:selectItem itemLabel="O+" itemValue="O+" />
+                                <f:selectItem itemLabel="O-" itemValue="O-" />
+                                <f:selectItem itemLabel="AB+" itemValue="AB+" />
+                                <f:selectItem itemLabel="AB-" itemValue="AB-" />            
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Quantite:" for="quantite" />
+                            <p:inputText id="quantite" value="#{banqueSangController.banqueSang.quantite}" title="Quantite" />     
+                        </p:panelGrid>
+                        <p:commandButton value="Valider" actionListener="#{banqueSangController.save()}" update=":BanqueSangListForm"  />
+                    </h:form>
+
+
+
+                    <h:form id="BanqueSangListForm" >
+                        <h1><h:outputText value="List"/></h1>
+                        
+                        <p:dataTable id="datalist" value="#{banqueSangController.banqueSangs}" var="item" >
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Id"/>
+                                </f:facet>
+                                <h:outputText value="#{item.id}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GroupeSanguin"/>
+                                </f:facet>
+                                <h:outputText value="#{item.groupeSanguin}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Quantite"/>
+                                </f:facet>
+                                <h:outputText value="#{item.quantite}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Statut"/>
+                                </f:facet>
+                                <h:outputText value="#{item.statut}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+
+
+        </ui:define>
+    </ui:composition>
+
+</html>

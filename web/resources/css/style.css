@@ -1,0 +1,3 @@
+.ui-icon-myCancel{
+    background-image: url("#{resources['images/white16x16/ic_ok.png']}") !important;
+}

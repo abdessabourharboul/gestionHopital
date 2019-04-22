@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="CREE CLIENT"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+
+
+            <f:view>
+                <h:form>
+                    <h1><h:outputText value="Create/Edit"/></h1>
+                    <p:growl id="messages"  autoUpdate="true" showDetail="true"/>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Type:" for="type" />
+                        <p:selectOneMenu id="type" value="#{reservationController.reservation.chambre.type}" >
+                            <f:selectItem itemLabel="Select Type de chambre" noSelectionOption="true" />
+                            <f:selectItem itemLabel="Avec un lit" itemValue="Avec un lit" />
+                            <f:selectItem itemLabel="Avec deux lits" itemValue="Avec deux lits" />
+                            <f:selectItem itemLabel="Avec quatres lits" itemValue="Avec quatres lits" />       
+                            <p:ajax  update="chambre" process="type chambre" listener="#{reservationController.findChambresByType()}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Chambre:" for="chambre" />
+                        <p:selectOneMenu id="chambre" value="#{reservationController.reservation.chambre.id}">
+                            <f:selectItem itemLabel="Select Chambre" noSelectionOption="true" />
+                            <f:selectItems value="#{reservationController.myChambres}" var="s"
+                                           itemValue="#{s.id}" itemLabel="#{s.id}" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Entreedate:" for="entreedate" />
+                        <p:calendar id="entreedate" value="#{reservationController.reservation.entreedate}" 
+                                    title="Entreedate" pattern="dd-MM-yyyy" />
+                        <p:outputLabel value="Sortiedate:" for="sortiedate" />
+                        <p:calendar id="sortiedate" value="#{reservationController.reservation.sortiedate}" 
+                                    title="Sortiedate" pattern="dd-MM-yyyy"/>
+                    </p:panelGrid>
+                    <p:commandButton value="Valider"  actionListener="#{reservationController.save()}" update=":ReservationListForm:datalist,messages"/>
+                </h:form>
+            </f:view>
+
+
+            <h:form id="searshRes">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Date Entre" for="entreedate" />
+                    <p:calendar id="entreedate" value="#{reservationController.dateEntre}" 
+                                title="Date Entre" pattern="dd-MM-yyyy" />
+                    <p:outputLabel value="Date Sortie" for="sortiedate" />
+                    <p:calendar id="sortiedate" value="#{reservationController.dateSortie}" 
+                                title="Date Sortie" pattern="d-MM-yyyy"/>       
+                    <p:commandButton actionListener="#{reservationController.searshResS()}" update=":ReservationListForm:datalist" value="SEARSH"></p:commandButton> 
+                </p:panelGrid>
+            </h:form>
+
+
+
+            <h:form id="ReservationListForm">
+                <h1><h:outputText value="List"/></h1>
+                <p:dataTable id="datalist" value="#{reservationController.reservations}" var="item">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Id"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Type"/>
+                        </f:facet>
+                        <h:outputText value="#{item.chambre.type}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Entreedate"/>
+                        </f:facet>
+                        <h:outputText value="#{item.entreedate}">
+                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Sortiedate"/>
+                        </f:facet>
+                        <h:outputText value="#{item.sortiedate}">
+                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Prix"/>
+                        </f:facet>
+                        <h:outputText value="#{item.prix}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+
+</html>

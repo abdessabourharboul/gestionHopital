@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templateClient.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="CREE CLIENT"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+
+           <center>
+                    <p style="font-size:72px;color:orange;text-shadow:30px 30px 30px #000;">HOPITAL ABDESSABOUR</p>
+                    <f:view>
+                        <h:form>
+                            <p:dataTable id="datalist"  value="#{userController.connectedUser.client.prelevements}" var="item" >                      
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="N° analyse"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.id}" />
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="detail"/>
+                                    </f:facet>
+                                    <p:commandButton value="Detail" actionListener="#{prelevementController.setPrev(item)}" update=":kiki" />
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                        <h:form id="kiki">
+                            <p:panelGrid columns="2" >
+                                <p:outputLabel value="Medecin:"  />
+                                <p:outputLabel value="#{prelevementController.prev.medecin.id}"/>                                   
+                                <p:outputLabel value="PrelevementDate:"  />
+                                <p:outputLabel  value="#{prelevementController.prev.prelevementDate}" title="PrelevementDate" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:outputLabel>
+                                <p:outputLabel value="Lymphocytes:" for="lymphocytes" />
+                                <p:outputLabel id="lymphocytes" value="#{prelevementController.prev.prelevementResultat.lymphocytes}" title="Lymphocytes" />
+                                <p:outputLabel value="Monocytes:" for="monocytes" />
+                                <p:outputLabel id="monocytes" value="#{prelevementController.prev.prelevementResultat.monocytes}" title="Monocytes" />
+                                <p:outputLabel value="Plaquettes:" for="plaquettes" />
+                                <p:outputLabel id="plaquettes" value="#{prelevementController.prev.prelevementResultat.plaquettes}" title="Plaquettes" />
+                                <p:outputLabel value="Cholesterol:" for="cholesterol" />
+                                <p:outputLabel id="cholesterol" value="#{prelevementController.prev.prelevementResultat.cholesterol}" title="Cholesterol" />
+                                <p:outputLabel value="Triglycerides:" for="triglycerides" />
+                                <p:outputLabel id="triglycerides" value="#{prelevementController.prev.prelevementResultat.triglycerides}" title="Triglycerides" />
+                                <p:outputLabel value="Glycemie:" for="glycemie" />
+                                <p:outputLabel id="glycemie" value="#{prelevementController.prev.prelevementResultat.glycemie}" title="Glycemie" />
+                                <p:outputLabel value="Sodium:" for="sodium" />
+                                <p:outputLabel id="sodium" value="#{prelevementController.prev.prelevementResultat.sodium}" title="Sodium" />
+                                <p:outputLabel value="Calcium:" for="calcium" />
+                                <p:outputLabel id="calcium" value="#{prelevementController.prev.prelevementResultat.calcium}" title="Calcium" />
+                                <p:outputLabel value="Phosphore:" for="phosphore" />
+                                <p:outputLabel id="phosphore" value="#{prelevementController.prev.prelevementResultat.phosphore}" title="Phosphore" />
+                            </p:panelGrid>
+                        </h:form>
+                    </f:view>
+                </center>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templateClient.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="CREE CLIENT"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <f:view>
+                <h:form>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Type:" for="type" />
+                        <p:inputText id="type" value="#{chirurgieController.chirurgie.type}" title="Type" />
+                    </p:panelGrid>
+                    <p:commandButton value="Valider" actionListener="#{chirurgieController.save()}" />
+                </h:form>
+            </f:view>
+        </ui:define>
+    </ui:composition>
+
+</html>

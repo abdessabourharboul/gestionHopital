@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="CREE CLIENT"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+
+            <!--            <p style="font-size:72px;color:orange;text-shadow:1px 1px 1px #000;">HOPITAL ABDESSABOUR</p>           -->
+            <f:view>
+                <h:form>
+                    <center>
+                        <p:accordionPanel activeIndex="">
+                            <p:tab title="Creer un Rendez-vous">
+                                <!--                            <h1><h:outputText value="Creer un Rendez-vous"/></h1>-->
+                                <p:panelGrid columns="2">
+                                    <p:outputLabel value="Medecin:" for="medecin" />
+                                    <p:selectOneMenu id="medecin" value="#{appointementController.appointement.medecin.id}"  >
+                                        <!-- TODO: update below reference to list of available items-->
+                                        <f:selectItem itemLabel="Selectionner Un Medecin" itemValue="" />  
+                                        <f:selectItems value="#{medecinController.medecins}" var="d" itemValue="#{d.id}" itemLabel="#{d.fullname}"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value="Client:" for="client" />
+                                    <p:selectOneMenu id="client" value="#{appointementController.appointement.client.id}" >
+                                        <!-- TODO: update below reference to list of available items-->
+                                        <f:selectItem itemLabel="Selectionner Un Client" itemValue=""  />
+                                        <f:selectItems value="#{clientController.clients}"  var="d" itemValue="#{d.id}" itemLabel="#{d.id}"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value="Objet:" for="objet" />
+                                    <p:inputText id="objet" value="#{appointementController.appointement.objet}" title="Objet" />                   
+                                    <p:outputLabel value="Date du Rendezvous:" for="rendezvous" />
+                                    <p:calendar id="rendezvous" value="#{appointementController.appointement.rendezvous}" 
+                                                title="Rendezvous" pattern="dd/MM/yyyy"/>
+                                    <p:commandButton actionListener="#{appointementController.save()}" value="SAVE" update=":AppointementListForm:datalist"/>
+                                </p:panelGrid>
+                            </p:tab>
+                        </p:accordionPanel>
+                    </center>
+                </h:form>
+            </f:view>
+            
+            <f:view>
+                <h:form id="AppointementListForm">
+                    <center><h1><h:outputText value="Liste des Rendezvous"/></h1></center>
+                    <p:dataTable id="datalist"  value="#{appointementController.appointements}" var="item">
+                        <p:column filterBy="#{item.id}">
+                            <f:facet name="header">
+                                <h:outputText value="Id"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.objet}">
+                            <f:facet name="header">
+                                <h:outputText value="Objet du Rendezvous"/>
+                            </f:facet>
+
+                            <h:outputText value="#{item.objet}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.medecin.fullname}">
+                            <f:facet name="header">
+                                <h:outputText value="Medecin"/>
+                            </f:facet>
+                            <h:outputText value="#{item.medecin.fullname}"/>
+                        </p:column>                       
+                        <p:column sortBy="#{item.client.id}" filterBy="#{item.client.id}">
+                            <f:facet name="header">
+                                <h:outputText value="Client"/>
+                            </f:facet>
+                            <h:outputText value="#{item.client.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Date du Rendezvous"/>
+                            </f:facet>
+                            <h:outputText value="#{item.rendezvous}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Action Modifier"/>
+                            </f:facet>
+                            <p:commandButton  value="Modifier" icon="ui-icon-pencil" 
+                                              oncomplete="PF('modifierDialog').show();"
+                                              actionListener="#{appointementController.update(item)}" update=":fModify"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Action Supprimer"/>
+                            </f:facet>
+                            <p:commandButton value="Supprimer" icon="ui-icon-cancel" update="datalist"
+                                             actionListener="#{appointementController.remove(item)}"/> 
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </f:view>
+            <h:form id="fModify">
+                <p:dialog id="modifyDialog" header="Modifier Rendez-vous" widgetVar="modifierDialog">  
+                    <p:ajax event="close" update=":AppointementListForm:datalist"/> 
+                    <p:outputPanel id="modifyPanel">  
+                        <p:messages id="msges"/>  
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Medecin:" for="medecin" />
+                            <p:selectOneMenu id="medecin" value="#{appointementController.appointement.medecin.id}"  >
+                                <!-- TODO: update below reference to list of available items-->
+                                <f:selectItem itemLabel="Selectionner Un Medecin" itemValue="" />  
+                                <f:selectItems value="#{medecinController.medecins}" var="d" itemValue="#{d.id}" itemLabel="#{d.fullname}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Client:" for="client" />
+                            <p:selectOneMenu id="client" value="#{appointementController.appointement.client.id}" >
+                                <!-- TODO: update below reference to list of available items-->
+                                <f:selectItem itemLabel="Selectionner Un Client" itemValue="" />
+                                <f:selectItems value="#{clientController.clients}" var="n" itemValue="#{n.id}" itemLabel="#{n.id}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Objet:" for="objet" />
+                            <p:inputText id="objet" value="#{appointementController.appointement.objet}" title="Objet" />                   
+                            <p:outputLabel value="Date du Rendezvous:" for="rendezvous" />
+                            <p:calendar id="rendezvous" value="#{appointementController.appointement.rendezvous}" 
+                                        title="Rendezvous" pattern="dd/MM/yyyy"/>
+
+                            <p:commandButton actionListener="#{appointementController.modify()}" 
+                                             value="SAVE" update=":AppointementListForm:datalist"
+                                             onclick="PF('modifyDialog').hide();"/>
+                        </p:panelGrid> 
+                    </p:outputPanel>
+                </p:dialog>
+            </h:form>
+           
+        </ui:define>
+    </ui:composition>
+</html>
